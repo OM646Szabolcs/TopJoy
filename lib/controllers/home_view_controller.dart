@@ -1,14 +1,21 @@
+import 'dart:ffi';
 import 'dart:math';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:topjoy/constants.dart' as constants;
 
-class HomeViewController extends GetxController {
-  int bottlecapState = 0;
+class HomeViewController extends GetxController{
+  BuildContext context;
+  HomeViewController(this.context);
+
+  bool isInitialised = false;
+
+  int bottlecapState = 0 ;
   int random = 0;
-  String giveMeMessage() {
-    return (bottlecapState == 10)
-        ? constants.messages[random].toUpperCase(): "";
+  String giveMeMessage(){
+    int randoom = Random().nextInt(constants.messages.length);
+    return (bottlecapState==10) ? constants.messages[randoom].toUpperCase():"";
   }
 
   void flipTheBottlecap() async {
@@ -20,4 +27,22 @@ class HomeViewController extends GetxController {
       update();
     }
   }
+
+Future<void> preloadAllImages() async{
+    for (int i = 0; i < 11; i++) {
+      await(AssetImage('images/bottlecap_$i.png'), context);
+    }
+  }
+
+    @override
+    void onInit() async{
+      super.onInit();
+      await preloadAllImages();
+      isInitialised = true;
+      update();
+    }
+ }
+
+
+
 }
