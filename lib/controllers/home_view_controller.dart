@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
@@ -30,7 +30,7 @@ class HomeViewController extends GetxController{
 
 Future<void> preloadAllImages() async{
     for (int i = 0; i < 11; i++) {
-      await(AssetImage('images/bottlecap_$i.png'), context);
+      await precacheImage (AssetImage('images/bottlecap_$i.png'), context);
     }
   }
 
@@ -45,4 +45,4 @@ Future<void> preloadAllImages() async{
 
 
 
-}
+
